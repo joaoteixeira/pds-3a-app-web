@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/" />
+    <title>Sistema Web</title>
+
+    <link rel="stylesheet" href="bootstrap/bootstrap.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // tailwind.config = {
+        //     darkMode: 'class',
+        // }
+    </script>
+
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="stylesheet" href="/css/app.css" />
+    <link rel="stylesheet" href="/css/styles.css"/>
+
+    <link rel="stylesheet" href="AppExemplo.styles.css" />
+
+    <HeadOutlet />
+</head>
+
+<body class="flex h-screen bg-gray-100 dark:bg-gray-900 dark:text-gray-200 transition-colors duration-500">
+
+    <Routes />
+    <script src="_framework/blazor.web.js"></script>
+
+    <!-- Script com jQuery -->
+    <script>
+        $(function () {
+          // Toggle sidebar
+          $("#toggleSidebar").click(function () {
+            $("#sidebar").toggleClass("w-64 w-20");
+            $(".sidebar-text").toggleClass("hidden");
+          });
+
+          // Toggle theme com animação de transição de cores
+          $("#toggleTheme").click(function () {
+            $("html").toggleClass("dark");
+          });
+
+          // Dropdown animado
+          $("#userMenuBtn").click(function () {
+            let $dropdown = $("#userDropdown");
+            if ($dropdown.is(":visible")) {
+              $dropdown.addClass("dropdown-leave").removeClass("dropdown-enter dropdown-enter-active");
+              setTimeout(() => $dropdown.addClass("hidden").removeClass("dropdown-leave dropdown-leave-active"), 150);
+              $dropdown.addClass("dropdown-leave-active");
+            } else {
+              $dropdown.removeClass("hidden").addClass("dropdown-enter");
+              setTimeout(() => $dropdown.addClass("dropdown-enter-active").removeClass("dropdown-enter"), 10);
+            }
+          });
+
+          // Fecha dropdown ao clicar fora
+          $(document).click(function (e) {
+            if (!$(e.target).closest("#userMenuBtn, #userDropdown").length) {
+              $("#userDropdown").addClass("hidden").removeClass("dropdown-enter dropdown-enter-active dropdown-leave dropdown-leave-active");
+            }
+          });
+        });
+    </script>
+</body>
+
+</html>

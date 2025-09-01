@@ -1,0 +1,22 @@
+﻿/* Animação suave do dropdown */
+.dropdown-enter {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+.dropdown-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.2s ease-out;
+}
+
+.dropdown-leave {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.dropdown-leave-active {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.15s ease-in;
+}
