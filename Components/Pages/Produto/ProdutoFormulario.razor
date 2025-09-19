@@ -1,0 +1,70 @@
+﻿@page "/produtos/novo"
+@rendermode InteractiveServer
+
+@using AppExemplo.Models;
+@inject ProdutoDAO produtoDAO;
+@inject NavigationManager Navigation;
+
+<PageTitle>Produto - Novo</PageTitle>
+
+<h1 class="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-6">Novo Produto</h1>
+
+@if (erro != null)
+{
+    <div class="alert alert-danger">
+        @erro
+    </div>
+}
+
+
+<div class="row">
+    <div class="col">
+        <EditForm Model="NovoProduto" OnSubmit="Salvar">
+            <div class="form-group mb-4">
+                <label>Nome</label>
+                <input @bind-value="NovoProduto!.Nome" type="text" class="form-control" name="nome" placeholder="Informe o nome do produto" />
+            </div>
+
+            <div class="form-group mb-4">
+                <label>Quantidade</label>
+                <input @bind-value="NovoProduto!.Quantidade" type="text" class="form-control" name="quantidade" placeholder="Informe a quantidade de produtos" />
+            </div>
+
+            <div class="form-group mb-4">
+                <label>Preço</label>
+                <input @bind-value="NovoProduto!.Preco" type="text" class="form-control" name="preco" placeholder="Informe o preço do produtos" />
+            </div>
+
+            <div class="form-group mb-4">
+                <label>Descrição</label>
+                <textarea class="form-control" rows="5">@NovoProduto!.Descricao</textarea>
+            </div>
+
+            <button type="submit"  class="btn btn-primary">Salvar</button>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    private string? erro = null;
+
+    [SupplyParameterFromForm]
+    private Produto? NovoProduto { get; set; } = new();
+
+    private void Salvar()
+    {
+
+        try
+        {
+            produtoDAO.Inserir(NovoProduto);
+
+            Navigation.NavigateTo("/produtos");
+        } catch(Exception ex)
+        {
+            erro = ex.Message;
+        }
+
+        
+    }
+
+}
