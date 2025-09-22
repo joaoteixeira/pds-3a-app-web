@@ -19,25 +19,25 @@
 
 <div class="row">
     <div class="col">
-        <EditForm Model="NovoProduto" OnSubmit="Salvar">
+        <EditForm Model="_novoProduto" OnSubmit="Salvar">
             <div class="form-group mb-4">
                 <label>Nome</label>
-                <input @bind-value="NovoProduto!.Nome" type="text" class="form-control" name="nome" placeholder="Informe o nome do produto" />
+                <input @bind-value="_novoProduto!.Nome" type="text" class="form-control" name="nome" placeholder="Informe o nome do produto" />
             </div>
 
             <div class="form-group mb-4">
                 <label>Quantidade</label>
-                <input @bind-value="NovoProduto!.Quantidade" type="text" class="form-control" name="quantidade" placeholder="Informe a quantidade de produtos" />
+                <input @bind-value="_novoProduto!.Quantidade" type="text" class="form-control" name="quantidade" placeholder="Informe a quantidade de produtos" />
             </div>
 
             <div class="form-group mb-4">
                 <label>Preço</label>
-                <input @bind-value="NovoProduto!.Preco" type="text" class="form-control" name="preco" placeholder="Informe o preço do produtos" />
+                <input @bind-value="_novoProduto!.Preco" type="text" class="form-control" name="preco" placeholder="Informe o preço do produtos" />
             </div>
 
             <div class="form-group mb-4">
                 <label>Descrição</label>
-                <textarea class="form-control" rows="5">@NovoProduto!.Descricao</textarea>
+                <textarea class="form-control" rows="5">@_novoProduto!.Descricao</textarea>
             </div>
 
             <button type="submit"  class="btn btn-primary">Salvar</button>
@@ -49,14 +49,19 @@
     private string? erro = null;
 
     [SupplyParameterFromForm]
-    private Produto? NovoProduto { get; set; } = new();
+    private Produto? _novoProduto { get; set; } = new();
 
     private void Salvar()
     {
 
         try
         {
-            produtoDAO.Inserir(NovoProduto);
+            if(_novoProduto.Nome is null || _novoProduto.Nome == "")
+            {
+                throw new Exception("O campo nome é obrigatório");
+            }
+
+            produtoDAO.Inserir(_novoProduto);
 
             Navigation.NavigateTo("/produtos");
         } catch(Exception ex)
